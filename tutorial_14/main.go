@@ -6,5 +6,7 @@ func main() {
 
 	myBill := newBill("Elgiganten")
 
-	fmt.Printf("myBill: %v\n", myBill)
+	billFs := myBill.Format()
+
+	fmt.Printf("myBill: %v\n", billFs)
 }
