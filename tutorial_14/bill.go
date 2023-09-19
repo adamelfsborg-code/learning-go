@@ -1,6 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+
+	"github.com/fxtlabs/date"
+)
 
 type bill struct {
 	name  string
@@ -19,7 +24,7 @@ func newBill(name string) bill {
 }
 
 func (b *bill) format() string {
-	fs := "Bill Breakdown: \n"
+	fs := fmt.Sprintf("Breakdown for Bill %v: \n", b.name)
 	var total float64 = b.tip
 
 	for k, v := range b.items {
@@ -40,4 +45,17 @@ func (b *bill) addItem(name string, price float64) {
 
 func (b *bill) updateTip(tip float64) {
 	b.tip = tip
+}
+
+func (b *bill) save() {
+	data := []byte(b.format())
+	currentTime := date.Today().Local().UnixMilli()
+	fileName := fmt.Sprintf("bills/%v-%v.txt", b.name, currentTime)
+
+	err := os.WriteFile(fileName, data, 7777)
+	if err != nil {
+		panic(fmt.Sprintf("Panic: %v", err))
+	}
+
+	fmt.Println("Bill was saved.")
 }
