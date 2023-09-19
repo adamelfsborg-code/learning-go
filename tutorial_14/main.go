@@ -6,7 +6,9 @@ func main() {
 
 	myBill := newBill("Elgiganten")
 
-	billFs := myBill.Format()
+	myBill.addItem("tv", 15)
 
-	fmt.Printf("myBill: %v\n", billFs)
+	myBill.updateTip(15)
+
+	fmt.Printf("myBill: %v\n", myBill.format())
 }
